@@ -873,8 +873,7 @@ public class ConexionBase {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public Proveedor buscarProveedor(int codigoProveedor) {
 
 		PreparedStatement preparedStatement = null;
@@ -884,15 +883,15 @@ public class ConexionBase {
 		conectar();
 
 		try {
-			preparedStatement = conexion
-					.prepareStatement("select codigoProveedor,nombre,apellido,cedula from proveedor where codigoProveedor=?");
+			preparedStatement = conexion.prepareStatement(
+					"select codigoProveedor,nombre,apellido,cedula from proveedor where codigoProveedor=?");
 			preparedStatement.setInt(1, codigoProveedor);
 
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next()) {
 
-				proveedor= new Proveedor();
+				proveedor = new Proveedor();
 				proveedor.setCodigoProveedor(resultSet.getInt("codigoProveedor"));
 				proveedor.setNombre(resultSet.getString("nombre"));
 				proveedor.setApellido(resultSet.getString("apellido"));
@@ -926,7 +925,8 @@ public class ConexionBase {
 		conectar();
 
 		try {
-			preparedStatement = conexion.prepareStatement("select numero from telefonoProveedor where proveedor_codigoProveedor=?");
+			preparedStatement = conexion
+					.prepareStatement("select numero from telefonoProveedor where proveedor_codigoProveedor=?");
 			preparedStatement.setInt(1, codigoProveedor);
 
 			resultSet = preparedStatement.executeQuery();
@@ -949,7 +949,6 @@ public class ConexionBase {
 
 	}
 
-	
 	public ArrayList<Proveedor> cargarProveedores() {
 
 		ArrayList<Proveedor> listaProveedores = new ArrayList<>();
@@ -966,7 +965,7 @@ public class ConexionBase {
 
 			while (resultSet.next()) {
 
-				proveedor= new Proveedor();
+				proveedor = new Proveedor();
 				proveedor.setCodigoProveedor(resultSet.getInt("codigoProveedor"));
 				proveedor.setNombre(resultSet.getString("nombre"));
 				proveedor.setApellido(resultSet.getString("apellido"));
@@ -984,20 +983,19 @@ public class ConexionBase {
 
 		return null;
 	}
-	
-	
+
 	// --------------------------- CARRITO --------------------------//
-	
+
 	public boolean crearCarrito(Date fechaCreacion, String cedulaCliente, int precioTotal) {
 
-		boolean centinela= false;
+		boolean centinela = false;
 		PreparedStatement preparedStatement = null;
 
 		conectar();
 
 		try {
-			preparedStatement = conexion.prepareStatement(
-					"insert into carrito(fechaCreacion, cedulaCliente,costoTotal) values(?,?,?)");
+			preparedStatement = conexion
+					.prepareStatement("insert into carrito(fechaCreacion, cedulaCliente,costoTotal) values(?,?,?)");
 			preparedStatement.setDate(1, fechaCreacion);
 			preparedStatement.setString(2, cedulaCliente);
 			preparedStatement.setInt(3, precioTotal);
@@ -1007,7 +1005,7 @@ public class ConexionBase {
 			if (aux > 0) {
 				conexion.close();
 
-				return centinela=true;
+				return centinela = true;
 
 			} else {
 				return centinela;
@@ -1020,11 +1018,10 @@ public class ConexionBase {
 
 		return centinela;
 	}
-	
-	
+
 	public boolean eliminarCarrito(int numeroCarrito) {
 
-		boolean centinela=false;
+		boolean centinela = false;
 		PreparedStatement preparedStatement = null;
 
 		conectar();
@@ -1038,7 +1035,7 @@ public class ConexionBase {
 			if (aux > 0) {
 				conexion.close();
 
-				return centinela=true;
+				return centinela = true;
 			} else {
 
 				return centinela;
@@ -1050,8 +1047,7 @@ public class ConexionBase {
 		}
 		return centinela;
 	}
-	
-	
+
 	public Carrito buscarCarrito(int numeroCarrito) {
 
 		PreparedStatement preparedStatement = null;
@@ -1091,9 +1087,8 @@ public class ConexionBase {
 		}
 		return carrito;
 	}
-	
-	
-	public boolean actualizarCarrito(int numeroCarrito,Date fechaCarritoN, int precioTotal) {
+
+	public boolean actualizarCarrito(int numeroCarrito, Date fechaCarritoN, int precioTotal) {
 
 		boolean centinela = false;
 		PreparedStatement preparedStatement = null;
@@ -1101,11 +1096,11 @@ public class ConexionBase {
 		conectar();
 
 		try {
-			preparedStatement = conexion.prepareStatement("update carrito set fechaCreacion=?, costoTotal=? where numeroCarrito=?");
-			preparedStatement.setDate(1,fechaCarritoN);
+			preparedStatement = conexion
+					.prepareStatement("update carrito set fechaCreacion=?, costoTotal=? where numeroCarrito=?");
+			preparedStatement.setDate(1, fechaCarritoN);
 			preparedStatement.setInt(2, precioTotal);
 			preparedStatement.setInt(3, numeroCarrito);
-
 
 			int aux = preparedStatement.executeUpdate();
 
@@ -1113,7 +1108,7 @@ public class ConexionBase {
 
 				conexion.close();
 
-				return centinela=true;
+				return centinela = true;
 			} else {
 				return centinela;
 			}
@@ -1125,8 +1120,7 @@ public class ConexionBase {
 
 		return centinela;
 	}
-		
-	
+
 	public ArrayList<Carrito> cargarCarritos() {
 
 		ArrayList<Carrito> listaCarritos = new ArrayList<>();
@@ -1161,4 +1155,247 @@ public class ConexionBase {
 
 		return null;
 	}
+
+	// --------------------------------- TRAMITE ---------------------------- //
+
+	public boolean crearTramite(int codigoTramite, int cantidad, int precioTotal, int costoUnitario, int codigoSede,
+			int codigoProducto, int codigoProveedor, Date fechaCreacion) {
+
+		Sede sede = buscarSede(codigoSede);
+		Producto producto = buscarProducto(codigoProducto);
+		Proveedor proveedor = buscarProveedor(codigoProveedor);
+
+		boolean centinela = false;
+		PreparedStatement preparedStatement = null;
+
+		conectar();
+
+		if (sede != null && producto != null && proveedor != null) {
+
+			try {
+				preparedStatement = conexion.prepareStatement(
+						"insert into sede_proveedor(codigo,cantidad,precioTotal,costoUnitario,sede_codigoSede,producto_codigoProducto,proveedor_codigoProveedor,fecha) values(?,?,?,?,?,?,?,?)");
+
+				preparedStatement.setInt(1, codigoTramite);
+				preparedStatement.setInt(2, cantidad);
+				preparedStatement.setInt(3, precioTotal);
+				preparedStatement.setInt(4, costoUnitario);
+				preparedStatement.setInt(5, codigoSede);
+				preparedStatement.setInt(6, codigoProducto);
+				preparedStatement.setInt(7, codigoProveedor);
+				preparedStatement.setDate(8, fechaCreacion);
+
+				int aux = preparedStatement.executeUpdate();
+
+				if (aux > 0) {
+					conexion.close();
+
+					return centinela = true;
+
+				} else {
+					return centinela;
+				}
+
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+			return centinela;
+		}
+
+		return centinela;
+
+	}
+
+	public boolean buscarTramite(int codigoTramite) {
+
+		Sede_Proveedor tramite = null;
+		boolean centinela = false;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		conectar();
+
+		try {
+
+			preparedStatement = conexion.prepareStatement("select * from sede_proveedor where codigo=?");
+			preparedStatement.setInt(1, codigoTramite);
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				tramite = new Sede_Proveedor();
+				tramite.setCodigo(resultSet.getInt("codigo"));
+				tramite.setCantidad(resultSet.getInt("cantidad"));
+				tramite.setPrecioTotal(resultSet.getInt("precioTotal"));
+				tramite.setCostoUnitario(resultSet.getInt("costoUnitario"));
+				tramite.setSede_codigoSede(resultSet.getInt("sede_codigoSede"));
+				tramite.setProducto_codigoProducto(resultSet.getInt("producto_codigoProducto"));
+				tramite.setProveedor_codigoProveedor(resultSet.getInt("proveedor_codigoProveedor"));
+				tramite.setFecha(resultSet.getDate("fecha"));
+
+			}
+
+			conexion.close();
+
+			if (tramite != null) {
+				return centinela = true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return centinela;
+	}
+
+	public boolean eliminarTramite(int codigoTramite) {
+
+		boolean centinela = false;
+		boolean encontrado = buscarTramite(codigoTramite);
+		PreparedStatement preparedStatement = null;
+		conectar();
+
+		if (encontrado) {
+
+			try {
+
+				preparedStatement = conexion.prepareStatement("delete from sede_proveedor where codigo=?");
+				preparedStatement.setInt(1, codigoTramite);
+
+				int aux = preparedStatement.executeUpdate();
+
+				if (aux > 0) {
+					conexion.close();
+
+					return centinela = true;
+				} else {
+
+					return centinela;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		return centinela;
+	}
+
+	// --------------------------------- VENTA ---------------------------- //
+
+	public boolean crearVenta(int codigoTramite, int cantidad, int codigoCarrito) {
+
+		boolean tramite = buscarTramite(codigoTramite);
+		Carrito carrito = buscarCarrito(codigoCarrito);
+
+		boolean centinela = false;
+		PreparedStatement preparedStatement = null;
+
+		conectar();
+
+		if (carrito != null && tramite == true) {
+
+			try {
+				preparedStatement = conexion.prepareStatement(
+						"insert into carrito_sede_proveedor(cantidad,carrito_numeroCarrito,codigoSP) values(?,?,?)");
+
+				preparedStatement.setInt(1, cantidad);
+				preparedStatement.setInt(2, codigoCarrito);
+				preparedStatement.setInt(3, codigoTramite);
+
+				int aux = preparedStatement.executeUpdate();
+
+				if (aux > 0) {
+					conexion.close();
+
+					return centinela = true;
+
+				} else {
+					return centinela;
+				}
+
+			} catch (SQLException e) {
+
+				e.printStackTrace();
+			}
+			return centinela;
+		}
+
+		return centinela;
+
+	}
+
+	public boolean buscarVenta(int codigoTramite) {
+
+		Carrito_Sede_Proveedor venta = null;
+		boolean centinela = false;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+
+		conectar();
+
+		try {
+
+			preparedStatement = conexion.prepareStatement("select * from carrito_sede_proveedor where codigoSP=?");
+			preparedStatement.setInt(1, codigoTramite);
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next()) {
+
+				venta = new Carrito_Sede_Proveedor();
+				venta.setCantidad(resultSet.getInt("cantidad"));
+				venta.setCarrito_numeroCarrito(resultSet.getInt("carrito_numeroCarrito"));
+				venta.setCodigoSP(resultSet.getInt("codigoSP"));
+
+			}
+
+			conexion.close();
+
+			if (venta != null) {
+				return centinela = true;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return centinela;
+	}
+
+	public boolean eliminarVenta(int codigoTramite) {
+
+		boolean centinela = false;
+		boolean encontrado = buscarVenta(codigoTramite);
+		PreparedStatement preparedStatement = null;
+		conectar();
+
+		if (encontrado) {
+
+			try {
+
+				preparedStatement = conexion.prepareStatement("delete from carrito_sede_proveedor where codigoSP=?");
+				preparedStatement.setInt(1, codigoTramite);
+
+				int aux = preparedStatement.executeUpdate();
+
+				if (aux > 0) {
+					conexion.close();
+
+					return centinela = true;
+				} else {
+
+					return centinela;
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		return centinela;
+	}
+
 }

@@ -99,19 +99,30 @@ public class VistaPrincipal extends JFrame {
 			}
 		});
 	}
-	
+
 	public Image imagenFondo;
 	public URL fondo;
 	private JTextField textoPrecioTotalCarrito;
+	private JTextField textCodigoTramite;
+	private JTextField textCodSedeAP;
+	private JTextField textCodProveedorAP;
+	private JTextField textCodProductoAP;
+	private JTextField textCantidadAP;
+	private JTextField textCostoUnitarioAP;
+	private JTextField textPrecioTotalAP;
+	private JTextField textFechaAP;
+	private JTextField textCantidadVenta;
+	private JTextField textCodigiCarritoVenta;
+	private JTextField textCodigoTramiteVenta;
 
 	/**
 	 * Create the frame.
 	 */
 	public VistaPrincipal() {
-		
-		fondo= this.getClass().getResource("/co/edu/uniquindio/inconos/fondo.png");
-		imagenFondo =new ImageIcon(fondo).getImage();
-				
+
+		fondo = this.getClass().getResource("/co/edu/uniquindio/inconos/fondo.png");
+		imagenFondo = new ImageIcon(fondo).getImage();
+
 		setResizable(false);
 		setTitle("El Buen Precio");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -131,7 +142,7 @@ public class VistaPrincipal extends JFrame {
 
 		JPanel panelInicio = new JPanel() {
 			public void paintComponent(Graphics g) {
-				
+
 				g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
 			}
 		};
@@ -167,7 +178,7 @@ public class VistaPrincipal extends JFrame {
 
 		JPanel panelSede = new JPanel() {
 			public void paintComponent(Graphics g) {
-				
+
 				g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
 			}
 		};
@@ -446,7 +457,7 @@ public class VistaPrincipal extends JFrame {
 
 		JPanel panelProducto = new JPanel() {
 			public void paintComponent(Graphics g) {
-				
+
 				g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
 			}
 		};
@@ -759,7 +770,7 @@ public class VistaPrincipal extends JFrame {
 
 		JPanel panelProveedor = new JPanel() {
 			public void paintComponent(Graphics g) {
-				
+
 				g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
 			}
 		};
@@ -803,28 +814,20 @@ public class VistaPrincipal extends JFrame {
 		tablaProveedores.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-			
+
 				seleccionado = tablaProveedores.rowAtPoint(e.getPoint());
 				codigoProveedor = Integer.parseInt(String.valueOf(tablaProveedores.getValueAt(seleccionado, 0)));
 				textoCedulaProveedor.setText(String.valueOf(tablaProveedores.getValueAt(seleccionado, 1)));
 				textoNombreProveedor.setText(String.valueOf(tablaProveedores.getValueAt(seleccionado, 2)));
 				textoApellidosProveedor.setText(String.valueOf(tablaProveedores.getValueAt(seleccionado, 3)));
 				textTelefonoProveedores.setText(String.valueOf(tablaProveedores.getValueAt(seleccionado, 4)));
-				
+
 			}
 		});
-		tablaProveedores
-				.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-				{null, null, null, null, null},
-			},
-			new String[] {
-				"Codigo", "Cedula", "Nombre", "Apellidos", "Telefono"
-			}
-		));
+		tablaProveedores.setModel(new DefaultTableModel(
+				new Object[][] { { null, null, null, null, null }, { null, null, null, null, null },
+						{ null, null, null, null, null }, { null, null, null, null, null }, },
+				new String[] { "Codigo", "Cedula", "Nombre", "Apellidos", "Telefono" }));
 		scrollPane_1.setViewportView(tablaProveedores);
 
 		JLabel lblNewLabel_2_1 = new JLabel("Codigo:");
@@ -839,7 +842,7 @@ public class VistaPrincipal extends JFrame {
 		JButton btnBuscarProveedor = new JButton("Buscar");
 		btnBuscarProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				Proveedor proveedor = conexionBase.buscarProveedor(Integer.parseInt(textoBusquedaProveedor.getText()));
 
 				String matrizInfo[][] = new String[1][5];
@@ -856,9 +859,7 @@ public class VistaPrincipal extends JFrame {
 				}
 
 				tablaProveedores.setModel(new DefaultTableModel(matrizInfo,
-						new String[] {
-								"Codigo","Cedula", "Nombre", "Apellidos", "Telefono"
-							}));
+						new String[] { "Codigo", "Cedula", "Nombre", "Apellidos", "Telefono" }));
 				textoBusquedaProveedor.setText("");
 			}
 		});
@@ -869,9 +870,11 @@ public class VistaPrincipal extends JFrame {
 		JButton btnActualizarProveedor = new JButton("Modificar");
 		btnActualizarProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				boolean actualizado = conexionBase.modificarProveedor(codigoProveedor, textoCedulaProveedor.getText(), textoNombreProveedor.getText(), textoApellidosProveedor.getText(), textTelefonoProveedores.getText());
-				
+
+				boolean actualizado = conexionBase.modificarProveedor(codigoProveedor, textoCedulaProveedor.getText(),
+						textoNombreProveedor.getText(), textoApellidosProveedor.getText(),
+						textTelefonoProveedores.getText());
+
 				if (actualizado) {
 
 					JOptionPane.showMessageDialog(null, "Proveedor actualizado correctamente");
@@ -879,7 +882,7 @@ public class VistaPrincipal extends JFrame {
 
 					JOptionPane.showMessageDialog(null, "No se puedo actualizar el proveedor");
 				}
-			
+
 			}
 		});
 		btnActualizarProveedor.setBackground(Color.LIGHT_GRAY);
@@ -889,8 +892,10 @@ public class VistaPrincipal extends JFrame {
 		JButton btnCrearProveedor = new JButton("Crear");
 		btnCrearProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				boolean agregado= conexionBase.crearProveedor(Integer.parseInt(textoCodigoProveedor.getText()), textoCedulaProveedor.getText(), textoNombreProveedor.getText(), textoApellidosProveedor.getText(), textTelefonoProveedores.getText());
+
+				boolean agregado = conexionBase.crearProveedor(Integer.parseInt(textoCodigoProveedor.getText()),
+						textoCedulaProveedor.getText(), textoNombreProveedor.getText(),
+						textoApellidosProveedor.getText(), textTelefonoProveedores.getText());
 
 				if (agregado) {
 
@@ -913,7 +918,7 @@ public class VistaPrincipal extends JFrame {
 		JButton btnEliminarProveedor = new JButton("Eliminar");
 		btnEliminarProveedor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				boolean eliminado = conexionBase.eliminarProveedor(Integer.parseInt(textoBusquedaProveedor.getText()));
 
 				if (eliminado) {
@@ -1042,14 +1047,15 @@ public class VistaPrincipal extends JFrame {
 		JButton btnCargarSedes_1_1 = new JButton("Cargar");
 		btnCargarSedes_1_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				ArrayList<Proveedor> listaProveedores = conexionBase.cargarProveedores();
 
 				String matrizInfo[][] = new String[listaProveedores.size()][5];
 
-				for(int i=0;i<listaProveedores.size();i++) {
+				for (int i = 0; i < listaProveedores.size(); i++) {
 
-					String telefono = conexionBase.buscarTelefonoProveedor(listaProveedores.get(i).getCodigoProveedor());
+					String telefono = conexionBase
+							.buscarTelefonoProveedor(listaProveedores.get(i).getCodigoProveedor());
 
 					matrizInfo[i][0] = listaProveedores.get(i).getCodigoProveedor() + "";
 					matrizInfo[i][1] = listaProveedores.get(i).getCedula() + "";
@@ -1059,9 +1065,7 @@ public class VistaPrincipal extends JFrame {
 				}
 
 				tablaProveedores.setModel(new DefaultTableModel(matrizInfo,
-						new String[] {
-								"Codigo","Cedula", "Nombre", "Apellidos", "Telefono"
-							}));
+						new String[] { "Codigo", "Cedula", "Nombre", "Apellidos", "Telefono" }));
 				textoBusquedaProveedor.setText("");
 			}
 		});
@@ -1071,7 +1075,7 @@ public class VistaPrincipal extends JFrame {
 
 		JPanel panelCliente = new JPanel() {
 			public void paintComponent(Graphics g) {
-				
+
 				g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
 			}
 		};
@@ -1115,7 +1119,7 @@ public class VistaPrincipal extends JFrame {
 		tablaClientes.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				seleccionado = tablaClientes.rowAtPoint(e.getPoint());
 				cedulaCliente = Integer.parseInt(String.valueOf(tablaClientes.getValueAt(seleccionado, 2)));
 				textoCedulaCliente.setText(String.valueOf(tablaClientes.getValueAt(seleccionado, 2)));
@@ -1143,7 +1147,7 @@ public class VistaPrincipal extends JFrame {
 		JButton btnBuscarCliente = new JButton("Buscar");
 		btnBuscarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				Cliente cliente = conexionBase.buscarCliente(Integer.parseInt(textoBusquedaCliente.getText()));
 
 				String matriz[][] = new String[1][6];
@@ -1157,9 +1161,10 @@ public class VistaPrincipal extends JFrame {
 
 				}
 
-				tablaClientes.setModel(new DefaultTableModel(matriz,
-						new String[] { "Nombre", "Apellidos", "Cedula", "Direccion" }));
-				textoBusquedaCliente.setText("");;
+				tablaClientes.setModel(
+						new DefaultTableModel(matriz, new String[] { "Nombre", "Apellidos", "Cedula", "Direccion" }));
+				textoBusquedaCliente.setText("");
+				;
 			}
 		});
 		btnBuscarCliente.setBackground(Color.LIGHT_GRAY);
@@ -1169,8 +1174,10 @@ public class VistaPrincipal extends JFrame {
 		JButton btnActualizarCliente = new JButton("Modificar");
 		btnActualizarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				boolean actualizado = conexionBase.modificarCliente(cedulaCliente, Integer.parseInt(textoCedulaCliente.getText()), textoNombreCliente.getText(), textoApellidosCliente.getText(), textoDireccionCliente.getText());
+
+				boolean actualizado = conexionBase.modificarCliente(cedulaCliente,
+						Integer.parseInt(textoCedulaCliente.getText()), textoNombreCliente.getText(),
+						textoApellidosCliente.getText(), textoDireccionCliente.getText());
 
 				if (actualizado) {
 
@@ -1194,8 +1201,8 @@ public class VistaPrincipal extends JFrame {
 		btnCrearCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 
-				
-				boolean agregado = conexionBase.crearCliente(Integer.parseInt(textoCedulaCliente.getText()), textoNombreCliente.getText(), textoApellidosCliente.getText(), textoDireccionCliente.getText());
+				boolean agregado = conexionBase.crearCliente(Integer.parseInt(textoCedulaCliente.getText()),
+						textoNombreCliente.getText(), textoApellidosCliente.getText(), textoDireccionCliente.getText());
 
 				if (agregado) {
 
@@ -1217,7 +1224,7 @@ public class VistaPrincipal extends JFrame {
 		JButton btnEliminarCliente = new JButton("Eliminar");
 		btnEliminarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				boolean verificado = conexionBase.eliminarCliente(Integer.parseInt(textoBusquedaCliente.getText()));
 
 				if (verificado) {
@@ -1338,12 +1345,12 @@ public class VistaPrincipal extends JFrame {
 		JButton btnCargarSedes_1_2 = new JButton("Cargar");
 		btnCargarSedes_1_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
-				ArrayList<Cliente> listaClientes= conexionBase.cargarClientes();
+
+				ArrayList<Cliente> listaClientes = conexionBase.cargarClientes();
 
 				String matriz[][] = new String[listaClientes.size()][4];
 
-				for(int i=0;i<listaClientes.size();i++){
+				for (int i = 0; i < listaClientes.size(); i++) {
 
 					matriz[i][0] = listaClientes.get(i).getNombre() + "";
 					matriz[i][1] = listaClientes.get(i).getApellido() + "";
@@ -1352,8 +1359,8 @@ public class VistaPrincipal extends JFrame {
 
 				}
 
-				tablaClientes.setModel(new DefaultTableModel(matriz,
-						new String[] { "Nombre", "Apellidos", "Cedula", "Direccion" }));
+				tablaClientes.setModel(
+						new DefaultTableModel(matriz, new String[] { "Nombre", "Apellidos", "Cedula", "Direccion" }));
 				textoBusquedaCliente.setText("");
 			}
 		});
@@ -1363,7 +1370,7 @@ public class VistaPrincipal extends JFrame {
 
 		JPanel panelCarrito = new JPanel() {
 			public void paintComponent(Graphics g) {
-				
+
 				g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
 			}
 		};
@@ -1398,7 +1405,7 @@ public class VistaPrincipal extends JFrame {
 		tablaCarritos.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+
 				seleccionado = tablaCarritos.rowAtPoint(e.getPoint());
 				numeroCarrito = Integer.parseInt(String.valueOf(tablaCarritos.getValueAt(seleccionado, 0)));
 				textoFechaCarrito.setText(String.valueOf(tablaCarritos.getValueAt(seleccionado, 2)));
@@ -1423,7 +1430,7 @@ public class VistaPrincipal extends JFrame {
 		JButton btnBuscarCarrito = new JButton("Buscar");
 		btnBuscarCarrito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				Carrito carrito = conexionBase.buscarCarrito(Integer.parseInt(textoBusquedaCarrito.getText()));
 
 				String matrizInfo[][] = new String[1][4];
@@ -1434,7 +1441,6 @@ public class VistaPrincipal extends JFrame {
 					matrizInfo[0][1] = carrito.getCedulaCliente() + "";
 					matrizInfo[0][2] = carrito.getFechaCreacion() + "";
 					matrizInfo[0][3] = carrito.getCostoTotal() + "";
-
 
 				}
 
@@ -1450,10 +1456,11 @@ public class VistaPrincipal extends JFrame {
 		JButton btnActualizarCarrito = new JButton("Modificar");
 		btnActualizarCarrito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				Date fechaCarrito = Date.valueOf(textoFechaCarrito.getText());
-				
-				boolean actualizado = conexionBase.actualizarCarrito(numeroCarrito,fechaCarrito,Integer.parseInt(textoPrecioTotalCarrito.getText()));
+
+				boolean actualizado = conexionBase.actualizarCarrito(numeroCarrito, fechaCarrito,
+						Integer.parseInt(textoPrecioTotalCarrito.getText()));
 
 				if (actualizado) {
 
@@ -1474,10 +1481,11 @@ public class VistaPrincipal extends JFrame {
 		JButton btnCrearCarrito = new JButton("Crear");
 		btnCrearCarrito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				Date fechaCarrito = Date.valueOf(textoFechaCarrito.getText());
 
-				boolean agregado = conexionBase.crearCarrito( fechaCarrito,textCedulaClienteCarrito.getText(),Integer.parseInt(textoPrecioTotalCarrito.getText()));
+				boolean agregado = conexionBase.crearCarrito(fechaCarrito, textCedulaClienteCarrito.getText(),
+						Integer.parseInt(textoPrecioTotalCarrito.getText()));
 
 				if (agregado) {
 
@@ -1486,9 +1494,9 @@ public class VistaPrincipal extends JFrame {
 					JOptionPane.showMessageDialog(null, "Ha ocurrido un error al momento de crear el carrito");
 				}
 
-			textoFechaCarrito.setText("");
-			textCedulaClienteCarrito.setText("");
-			textoPrecioTotalCarrito.setText("");
+				textoFechaCarrito.setText("");
+				textCedulaClienteCarrito.setText("");
+				textoPrecioTotalCarrito.setText("");
 			}
 		});
 		btnCrearCarrito.setBackground(Color.LIGHT_GRAY);
@@ -1498,7 +1506,7 @@ public class VistaPrincipal extends JFrame {
 		JButton btnEliminarCarrito = new JButton("Eliminar");
 		btnEliminarCarrito.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				boolean eliminado = conexionBase.eliminarCarrito(Integer.parseInt(textoBusquedaCarrito.getText()));
 
 				if (eliminado) {
@@ -1508,7 +1516,7 @@ public class VistaPrincipal extends JFrame {
 
 					JOptionPane.showMessageDialog(null, "No se ha podido eliminar el carrito");
 				}
-				
+
 				textoBusquedaCarrito.setText("");
 			}
 		});
@@ -1609,7 +1617,7 @@ public class VistaPrincipal extends JFrame {
 		JButton btnCargarSedes_1_3 = new JButton("Cargar");
 		btnCargarSedes_1_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+
 				ArrayList<Carrito> listaCarritos = conexionBase.cargarCarritos();
 
 				String matrizInfo[][] = new String[listaCarritos.size()][4];
@@ -1621,7 +1629,7 @@ public class VistaPrincipal extends JFrame {
 					matrizInfo[i][2] = listaCarritos.get(i).getFechaCreacion() + "";
 					matrizInfo[i][3] = listaCarritos.get(i).getCostoTotal() + "";
 				}
-				
+
 				tablaCarritos.setModel(new DefaultTableModel(matrizInfo,
 						new String[] { "Num Carrito", "Cliente", "Fecha", "Costo Total" }));
 			}
@@ -1629,14 +1637,241 @@ public class VistaPrincipal extends JFrame {
 		btnCargarSedes_1_3.setBackground(Color.LIGHT_GRAY);
 		btnCargarSedes_1_3.setBounds(353, 390, 104, 22);
 		panelCarrito.add(btnCargarSedes_1_3);
-		
+
 		JLabel lblCedulaCliente_1 = new JLabel("Cedula Cliente:");
 		lblCedulaCliente_1.setBounds(51, 80, 104, 14);
 		panelCarrito.add(lblCedulaCliente_1);
-		
+
 		textoPrecioTotalCarrito = new JTextField();
 		textoPrecioTotalCarrito.setBounds(195, 116, 161, 20);
 		panelCarrito.add(textoPrecioTotalCarrito);
 		textoPrecioTotalCarrito.setColumns(10);
+
+		JPanel panelRelaciones = new JPanel() {
+
+			public void paintComponent(Graphics g) {
+
+				g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+			}
+		};
+		panelRelaciones.setBackground(Color.WHITE);
+		tabbedPane.addTab("Relaciones", null, panelRelaciones, null);
+		panelRelaciones.setLayout(null);
+		
+		JSeparator separator_4_1_2_1 = new JSeparator();
+		separator_4_1_2_1.setBounds(31, 33, 732, 13);
+		panelRelaciones.add(separator_4_1_2_1);
+		
+		JLabel lblNewLabel_6_2_1 = new JLabel("");
+		lblNewLabel_6_2_1.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/co/edu/uniquindio/inconos/Titulo.png")));
+		lblNewLabel_6_2_1.setForeground(Color.DARK_GRAY);
+		lblNewLabel_6_2_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_6_2_1.setBounds(334, 0, 127, 34);
+		panelRelaciones.add(lblNewLabel_6_2_1);
+		
+		JSeparator separator = new JSeparator();
+		separator.setForeground(new Color(160, 160, 160));
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBackground(new Color(192, 192, 192));
+		separator.setBounds(395, 45, 1, 375);
+		panelRelaciones.add(separator);
+		
+		JLabel lblNewLabel_23 = new JLabel("Adquisicion de productos");
+		lblNewLabel_23.setBounds(139, 45, 155, 14);
+		panelRelaciones.add(lblNewLabel_23);
+		
+		JLabel lblNewLabel_24 = new JLabel("Tramite:");
+		lblNewLabel_24.setBounds(31, 78, 160, 14);
+		panelRelaciones.add(lblNewLabel_24);
+		
+		JLabel lblNewLabel_25 = new JLabel("Codigo Sede:");
+		lblNewLabel_25.setBounds(31, 113, 160, 14);
+		panelRelaciones.add(lblNewLabel_25);
+		
+		JLabel lblNewLabel_26 = new JLabel("Codigo producto:");
+		lblNewLabel_26.setBounds(31, 182, 160, 14);
+		panelRelaciones.add(lblNewLabel_26);
+		
+		JLabel lblNewLabel_27 = new JLabel("Codigo proveedor:");
+		lblNewLabel_27.setBounds(31, 149, 160, 14);
+		panelRelaciones.add(lblNewLabel_27);
+		
+		JLabel lblNewLabel_28 = new JLabel("Cantidad:");
+		lblNewLabel_28.setBounds(31, 218, 160, 13);
+		panelRelaciones.add(lblNewLabel_28);
+		
+		JLabel lblNewLabel_29 = new JLabel("Costo unitario:");
+		lblNewLabel_29.setBounds(31, 254, 160, 14);
+		panelRelaciones.add(lblNewLabel_29);
+		
+		JLabel lblNewLabel_30 = new JLabel("Precio total:");
+		lblNewLabel_30.setBounds(31, 291, 160, 14);
+		panelRelaciones.add(lblNewLabel_30);
+		
+		JLabel lblNewLabel_31 = new JLabel("Fecha:");
+		lblNewLabel_31.setBounds(31, 329, 160, 14);
+		panelRelaciones.add(lblNewLabel_31);
+		
+		textCodigoTramite = new JTextField();
+		textCodigoTramite.setColumns(10);
+		textCodigoTramite.setBounds(201, 75, 161, 20);
+		panelRelaciones.add(textCodigoTramite);
+		
+		textCodSedeAP = new JTextField();
+		textCodSedeAP.setColumns(10);
+		textCodSedeAP.setBounds(201, 110, 161, 20);
+		panelRelaciones.add(textCodSedeAP);
+		
+		textCodProveedorAP = new JTextField();
+		textCodProveedorAP.setColumns(10);
+		textCodProveedorAP.setBounds(201, 146, 161, 20);
+		panelRelaciones.add(textCodProveedorAP);
+		
+		textCodProductoAP = new JTextField();
+		textCodProductoAP.setColumns(10);
+		textCodProductoAP.setBounds(201, 179, 161, 20);
+		panelRelaciones.add(textCodProductoAP);
+		
+		textCantidadAP = new JTextField();
+		textCantidadAP.setColumns(10);
+		textCantidadAP.setBounds(201, 214, 161, 20);
+		panelRelaciones.add(textCantidadAP);
+		
+		textCostoUnitarioAP = new JTextField();
+		textCostoUnitarioAP.setColumns(10);
+		textCostoUnitarioAP.setBounds(201, 251, 161, 20);
+		panelRelaciones.add(textCostoUnitarioAP);
+		
+		textPrecioTotalAP = new JTextField();
+		textPrecioTotalAP.setColumns(10);
+		textPrecioTotalAP.setBounds(201, 288, 161, 20);
+		panelRelaciones.add(textPrecioTotalAP);
+		
+		textFechaAP = new JTextField();
+		textFechaAP.setColumns(10);
+		textFechaAP.setBounds(201, 326, 161, 20);
+		panelRelaciones.add(textFechaAP);
+		
+		JButton btnGuardar = new JButton("Guardar");
+		btnGuardar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				Date fechaCreacion = Date.valueOf(textFechaAP.getText());
+				
+				boolean aux = conexionBase.crearTramite(Integer.parseInt(textCodigoTramite.getText()), Integer.parseInt(textCantidadAP.getText()), Integer.parseInt(textPrecioTotalAP.getText()), Integer.parseInt(textCostoUnitarioAP.getText()), Integer.parseInt(textCodSedeAP.getText()), Integer.parseInt(textCodProductoAP.getText()), Integer.parseInt(textCodProveedorAP.getText()), fechaCreacion);
+			
+				if(aux) {
+					
+					JOptionPane.showMessageDialog(null,"El tramite se realizo con exito");
+					
+				}else {
+					
+					JOptionPane.showMessageDialog(null,"El tramite no se puedo efectuar");
+				}
+				
+				textCantidadAP.setText("");
+				textFechaAP.setText("");
+				textCodigoTramite.setText("");
+				textCodSedeAP.setText("");
+				textPrecioTotalAP.setText("");
+				textCostoUnitarioAP.setText("");
+				textCodProductoAP.setText("");
+				textCodProveedorAP.setText("");
+			}
+		});
+		btnGuardar.setBackground(Color.LIGHT_GRAY);
+		btnGuardar.setBounds(69, 380, 104, 20);
+		panelRelaciones.add(btnGuardar);
+		
+		JLabel lblNewLabel_23_1 = new JLabel("Ventas");
+		lblNewLabel_23_1.setBounds(573, 45, 53, 14);
+		panelRelaciones.add(lblNewLabel_23_1);
+		
+		JLabel lblNewLabel_28_1 = new JLabel("Cantidad:");
+		lblNewLabel_28_1.setBounds(444, 78, 92, 14);
+		panelRelaciones.add(lblNewLabel_28_1);
+		
+		JLabel lblNewLabel_27_1 = new JLabel("Codigo carrito:");
+		lblNewLabel_27_1.setBounds(444, 113, 92, 14);
+		panelRelaciones.add(lblNewLabel_27_1);
+		
+		JLabel lblNewLabel_24_1 = new JLabel("Codigo Tramite:");
+		lblNewLabel_24_1.setBounds(444, 149, 92, 14);
+		panelRelaciones.add(lblNewLabel_24_1);
+		
+		textCantidadVenta = new JTextField();
+		textCantidadVenta.setColumns(10);
+		textCantidadVenta.setBounds(602, 75, 161, 20);
+		panelRelaciones.add(textCantidadVenta);
+		
+		textCodigiCarritoVenta = new JTextField();
+		textCodigiCarritoVenta.setColumns(10);
+		textCodigiCarritoVenta.setBounds(602, 110, 161, 20);
+		panelRelaciones.add(textCodigiCarritoVenta);
+		
+		textCodigoTramiteVenta = new JTextField();
+		textCodigoTramiteVenta.setColumns(10);
+		textCodigoTramiteVenta.setBounds(602, 146, 161, 20);
+		panelRelaciones.add(textCodigoTramiteVenta);
+		
+		JButton btnGuardar_1 = new JButton("Guardar");
+		btnGuardar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				boolean aux = conexionBase.crearVenta(Integer.parseInt(textCodigoTramiteVenta.getText()), Integer.parseInt(textCantidadVenta.getText()), Integer.parseInt(textCodigiCarritoVenta.getText()));
+			
+				
+				if(aux) {
+					JOptionPane.showMessageDialog(null, "La venta se realizo correctamente");
+				}else {
+					JOptionPane.showMessageDialog(null, "La venta no se realizco correctamente");
+				}
+				
+				textCodigiCarritoVenta.setText("");
+				textCantidadVenta.setText("");
+				textCodigoTramiteVenta.setText("");
+			}
+		});
+		btnGuardar_1.setBackground(Color.LIGHT_GRAY);
+		btnGuardar_1.setBounds(486, 380, 104, 20);
+		panelRelaciones.add(btnGuardar_1);
+		
+		JButton btneliminarTramite = new JButton("Eliminar");
+		btneliminarTramite.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				boolean aux = conexionBase.eliminarTramite(Integer.parseInt(textCodigoTramite.getText()));
+				
+				if(aux) {
+					
+					JOptionPane.showMessageDialog(null,"El tramite se elimino correctamente");
+				}else {
+					JOptionPane.showMessageDialog(null,"El tramite no se pudo eliminar");
+				}
+			
+				textCodigoTramite.setText("");
+			}
+		});
+		btneliminarTramite.setBackground(Color.LIGHT_GRAY);
+		btneliminarTramite.setBounds(201, 380, 104, 20);
+		panelRelaciones.add(btneliminarTramite);
+		
+		JButton btnEliminarVenta = new JButton("Eliminar");
+		btnEliminarVenta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				boolean aux = conexionBase.eliminarVenta(Integer.parseInt(textCodigoTramiteVenta.getText()));
+				
+				if(aux) {
+					JOptionPane.showMessageDialog(null,"La venta se elimino correctamente");
+				}else {
+					JOptionPane.showMessageDialog(null,"La venta no se pudo eliminar");
+				}
+				textCodigoTramiteVenta.setText("");
+			}
+		});
+		btnEliminarVenta.setBackground(Color.LIGHT_GRAY);
+		btnEliminarVenta.setBounds(612, 380, 104, 20);
+		panelRelaciones.add(btnEliminarVenta);
 	}
 }
