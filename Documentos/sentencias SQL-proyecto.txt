@@ -1,0 +1,25 @@
+create database buenPrecio;
+use buenPrecio;
+
+create table ciudad (codigoPostal integer not null primary key, nombre varchar(50) not null);
+create table sede (codigoSede integer not null primary key, direccion varchar(50),ciudad_codigoPostal integer not null,foreign key(ciudad_codigoPostal) references ciudad(codigoPostal));
+create table tipo_producto(codigoTipo integer not null primary key,nombre varchar(50) not null);
+create table producto (codigoProducto integer not null primary key, nombre varchar (50) not null, descripcion varchar(50), stock integer not null, precio integer not null,tipo_tipoProducto integer not null,foreign key(tipo_tipoProducto) references tipo_producto(codigoTipo));
+create table proveedor (codigoProveedor integer not null primary key, cedula varchar(10), nombre varchar(50) not null, apellido varchar(50) not null);
+create table sede_proveedor (codigo integer not null primary key, cantidad integer not null, precioTotal integer not null, costoUnitario integer not null, sede_codigoSede integer not null, producto_codigoProducto integer not null, proveedor_codigoProveedor integer not null, fecha Date, foreign key(sede_codigoSede) references sede(codigoSede), foreign key(proveedor_codigoProveedor) references proveedor(codigoProveedor), foreign key (producto_codigoProducto) references producto(codigoProducto));
+create table cliente(cedula integer not null primary key, nombre varchar(50) not null, apellido varchar(50) not null, direccion varchar(50) not null);
+create table carrito(numeroCarrito integer not null primary key auto_increment, fechaCreacion Date, costoTotal integer, cedulaCliente integer not null, foreign key(cedulaCliente) references cliente(cedula));
+create table carrito_sede_proveedor (cantidad integer not null, carrito_numeroCarrito integer not null, codigoSP integer not null, primary key (codigoSP),foreign key(carrito_numeroCarrito) references carrito(numeroCarrito));
+create table telefonoProveedor ( numero varchar(18), proveedor_codigoProveedor integer not null , primary key (numero, proveedor_codigoProveedor), foreign key(proveedor_codigoProveedor) references proveedor(codigoProveedor));
+
+//agregar las ciudades
+insert into ciudad (codigoPostal, nombre) value (1,'armenia');
+insert into ciudad (codigoPostal, nombre) value (2,'medellin');
+insert into ciudad (codigoPostal, nombre) value (3,'bogota');
+
+//agrega los tipos
+insert into tipo_producto(codigoTipo,nombre) values(1,'higiene');
+insert into tipo_producto(codigoTipo,nombre) values(2,'hogar');
+insert into tipo_producto(codigoTipo,nombre) values(3,'belleza');
+insert into tipo_producto(codigoTipo,nombre) values(4,'mascota');
+insert into tipo_producto(codigoTipo,nombre) values(5,'alimento');
