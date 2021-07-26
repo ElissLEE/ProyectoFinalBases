@@ -9,7 +9,6 @@ import javax.swing.JTabbedPane;
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Container;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
@@ -24,14 +23,12 @@ import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
-
 import co.edu.uniquindio.conexion.ConexionBase;
 import co.edu.uniquindio.modelo.Carrito;
 import co.edu.uniquindio.modelo.Cliente;
 import co.edu.uniquindio.modelo.Producto;
 import co.edu.uniquindio.modelo.Proveedor;
 import co.edu.uniquindio.modelo.Sede;
-
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
