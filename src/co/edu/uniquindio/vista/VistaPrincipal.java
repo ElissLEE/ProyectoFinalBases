@@ -1,11 +1,13 @@
 package co.edu.uniquindio.vista;
 
 import java.awt.BorderLayout;
+import java.util.*;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Container;
 
 import javax.swing.JLabel;
@@ -13,10 +15,16 @@ import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+
 import co.edu.uniquindio.conexion.ConexionBase;
 import co.edu.uniquindio.modelo.Carrito;
 import co.edu.uniquindio.modelo.Cliente;
@@ -31,12 +39,20 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
+import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.sql.Date;
 import java.util.ArrayList;
+import javax.swing.JList;
+import java.awt.Panel;
+import java.awt.ScrollPane;
 
 public class VistaPrincipal extends JFrame {
 
@@ -83,6 +99,8 @@ public class VistaPrincipal extends JFrame {
 	private JTable tablaCarritos;
 	private JTextField textCedulaClienteCarrito;
 	private JTextField textTelefonoProveedores;
+	
+	private JList<String> listaConsultas;
 
 	/**
 	 * Launch the application.
@@ -1676,7 +1694,7 @@ public class VistaPrincipal extends JFrame {
 		separator.setBounds(395, 45, 1, 375);
 		panelRelaciones.add(separator);
 		
-		JLabel lblNewLabel_23 = new JLabel("Adquisicion de productos");
+		JLabel lblNewLabel_23 = new JLabel("Adquisición de productos");
 		lblNewLabel_23.setBounds(139, 45, 155, 14);
 		panelRelaciones.add(lblNewLabel_23);
 		
@@ -1873,5 +1891,114 @@ public class VistaPrincipal extends JFrame {
 		btnEliminarVenta.setBackground(Color.LIGHT_GRAY);
 		btnEliminarVenta.setBounds(612, 380, 104, 20);
 		panelRelaciones.add(btnEliminarVenta);
+		
+		JPanel panelConsultas = new JPanel() {
+			public void paintComponent(Graphics g) {
+
+				g.drawImage(imagenFondo, 0, 0, getWidth(), getHeight(), this);
+			}
+		};
+		
+		panelConsultas.setBackground(Color.WHITE);
+		tabbedPane.addTab("Consultas", null, panelConsultas, null);
+		panelConsultas.setLayout(null);
+		
+		JButton bGenerarPDF = new JButton("Generar PDF");
+		bGenerarPDF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				
+			}
+		});
+		
+		bGenerarPDF.setBackground(Color.LIGHT_GRAY);
+		bGenerarPDF.setBounds(600, 370, 128, 28);
+		panelConsultas.add(bGenerarPDF);
+	
+		String [] consultas = {"Listar el cliente con el carrito más caro",
+				"Listar el producto con más unidades",
+				"Listar la sede con más ventas",
+				"Listar los clientes que compraron en la sede de Armenia un producto de higiene, además, "
+					+ "los que compraron en la sede de Medellín un producto de Hogar",
+				"Listar los proveedores que proveyeron productos de Mascotas a la sede de Medellín y a la sede de Bogotá",
+				"Listar las sedes en orden descendente por ventas",
+				"Listar los clientes que compraron un producto de tipo alimento con un precio superior a 10000, "
+				+ "sólo listar aquellos que hayan comprado en la misma sede que los que compraron productos de tipo Belleza",
+				"Listar los proveedores que proveyeron a la sede de Medellín. Tener en cuenta solo los proveedores que hayan proveído en alguna de las fechas de los que proveyeron a la sede de Bogotá",
+				"Listar por Sede las ventas totales que tiene. Tener en cuenta solo aquellos clientes que tengan un carrito con un precio superior "
+				+ "al del carrito más caro de la sede de Medellín"};
+		
+		listaConsultas = new JList<String>(consultas);
+		listaConsultas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane panelLista = new JScrollPane(listaConsultas);
+		panelLista.setBounds(40, 80, 350, 250);
+		panelConsultas.add(panelLista);
+		
+		JSeparator separator_4_1_2_1_1 = new JSeparator();
+		separator_4_1_2_1_1.setBounds(31, 33, 732, 13);
+		panelConsultas.add(separator_4_1_2_1_1);
+		
+		JSeparator separator2 = new JSeparator();
+		separator.setForeground(new Color(160, 160, 160));
+		separator.setOrientation(SwingConstants.VERTICAL);
+		separator.setBackground(new Color(192, 192, 192));
+		separator.setBounds(400, 70, 50, 300);
+		panelConsultas.add(separator);
+		
+		JLabel lblNewLabel_6_2_1_1 = new JLabel("");
+		lblNewLabel_6_2_1_1.setIcon(new ImageIcon(VistaPrincipal.class.getResource("/co/edu/uniquindio/inconos/Titulo.png")));
+		lblNewLabel_6_2_1_1.setForeground(Color.DARK_GRAY);
+		lblNewLabel_6_2_1_1.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblNewLabel_6_2_1_1.setBounds(334, 0, 127, 34);
+		panelConsultas.add(lblNewLabel_6_2_1_1);
+		
+		JLabel lblNewLabel_23_11 = new JLabel("Consultas");
+		lblNewLabel_23_11.setFont(new Font("Tahoma", Font.BOLD, 16));
+		lblNewLabel_23_11.setBounds(370, 35, 127, 34);
+		panelConsultas.add(lblNewLabel_23_11);
+		
+		JLabel lblNewLabel_23_12 = new JLabel("Consulta seleccionada: ");
+		lblNewLabel_23_12.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblNewLabel_23_12.setBounds(420, 70, 200, 34);
+		panelConsultas.add(lblNewLabel_23_12);
+		
+		Border line = BorderFactory.createLineBorder(Color.BLACK, 1);
+		
+		JTextPane textPane= new JTextPane();
+		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		textPane.setBounds(420, 100, 350, 230);
+		textPane.setBackground(Color.WHITE);
+		SimpleAttributeSet align= new SimpleAttributeSet();
+		StyleConstants.setAlignment(align, StyleConstants.ALIGN_JUSTIFIED);
+		textPane.setBorder(line);
+		textPane.setFont(new Font("Arial", Font.BOLD, 14));
+		textPane.setEditable(false);
+		panelConsultas.add(textPane);
+		
+		listaConsultas.addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent arg0) {
+				
+				List<String> consulta = listaConsultas.getSelectedValuesList();
+				
+				StringBuilder texto = new StringBuilder();
+				
+				for (String aux : consulta) {
+					
+					String aux2 = aux;
+					
+					texto.append(aux2);
+					
+					texto.append(" ");
+					
+					textPane.setText(texto.toString());
+					
+				}
+				
+			}
+			
+		});
+		
 	}
 }

@@ -14,7 +14,7 @@ public class ConexionBase {
 
 	private static String url = "jdbc:mysql://localhost:3306/buenPrecio";
 	private static String usuario = "root";
-	private static String password = "root";
+	private static String password = "1234567890";
 	private static Connection conexion = null;
 
 	public ConexionBase() {
