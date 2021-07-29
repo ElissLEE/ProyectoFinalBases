@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f287fb1c-f3fa-41b8-b54b-86b6772da077">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="JasperDB"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM proveedor prov 
+INNER JOIN  sede_proveedor sedeProv 
+ON prov.codigoProveedor = sedeProv.proveedor_codigoProveedor 
+INNER JOIN sede sedeP 
+ON sedeProv.sede_codigoSede = sedeP.codigoSede 
+INNER JOIN ciudad ciuP 
+ON sedeP.ciudad_codigoPostal = ciuP.codigoPostal 
+WHERE ciuP.nombre LIKE 'medellin' 
+AND sedeProv.fecha IN
+(SELECT sedeProv2.fecha FROM proveedor prov2 
+INNER JOIN  sede_proveedor sedeProv2 
+ON prov2.codigoProveedor = sedeProv2.proveedor_codigoProveedor  
+INNER JOIN sede sedeP2 
+ON sedeProv2.sede_codigoSede = sedeP2.codigoSede 
+INNER JOIN ciudad ciuP2 
+ON sedeP2.ciudad_codigoPostal = ciuP2.codigoPostal 
+WHERE ciuP2.nombre  LIKE 'bogota')]]>
+	</queryString>
+	<field name="codigoProveedor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codigoProveedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigoProveedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cedula" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="apellido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="apellido"/>
+		<property name="com.jaspersoft.studio.field.label" value="apellido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede_proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.label" value="cantidad"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede_proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precioTotal" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="precioTotal"/>
+		<property name="com.jaspersoft.studio.field.label" value="precioTotal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede_proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="costoUnitario" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="costoUnitario"/>
+		<property name="com.jaspersoft.studio.field.label" value="costoUnitario"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede_proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="sede_codigoSede" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sede_codigoSede"/>
+		<property name="com.jaspersoft.studio.field.label" value="sede_codigoSede"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede_proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="producto_codigoProducto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="producto_codigoProducto"/>
+		<property name="com.jaspersoft.studio.field.label" value="producto_codigoProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede_proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="proveedor_codigoProveedor" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="proveedor_codigoProveedor"/>
+		<property name="com.jaspersoft.studio.field.label" value="proveedor_codigoProveedor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede_proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.name" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.label" value="fecha"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede_proveedor"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoSede" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codigoSede"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigoSede"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="ciudad_codigoPostal" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="ciudad_codigoPostal"/>
+		<property name="com.jaspersoft.studio.field.label" value="ciudad_codigoPostal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoPostal" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codigoPostal"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigoPostal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ciudad"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="COLUMN_17" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="ciudad"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<image>
+				<reportElement x="213" y="25" width="129" height="40" uuid="c6cef6e3-6aa6-4fa0-809b-e7624973fa41"/>
+				<imageExpression><![CDATA["C:/Users/TecnoMakro/Desktop/Trabajos/Proyecto Final Bases/ProyectoFinalBases/src/co/edu/uniquindio/inconos/Titulo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="91" y="11" width="373" height="30" uuid="2c1938d6-1f45-4a78-8de4-49249606f9ec"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resultados de la consulta seleccionada]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="65" splitType="Stretch">
+			<staticText>
+				<reportElement x="32" y="5" width="490" height="55" uuid="c47b4374-86dc-4b1a-b071-01447c101623"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Consulta: Listar los proveedores que proveyeron a la sede de Medellín. Tener en cuenta solo los proveedores que hayan proveído en alguna de las fechas de los que proveyeron a la sede de Bogotá
+]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="94" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="10" width="100" height="18" uuid="1a7bb6db-9395-4856-a746-3f35f5bec187"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="10" width="100" height="18" uuid="add3ed27-f583-4080-93a1-368dab422025"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="10" width="100" height="18" uuid="1a33145f-0d2e-44f9-9117-2a6020143485"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="10" width="120" height="18" uuid="c3ce126e-15c0-4fde-9a54-ad68fa24031d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Proveedor]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="160" y="47" width="100" height="31" uuid="e81c4f51-4800-45cc-aac0-6676bc2b6659"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="47" width="100" height="31" uuid="98bec9bc-3d4e-40bd-92f5-be8ca8725496"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="47" width="100" height="31" uuid="7bcd2734-9e95-4c36-bc63-d69802397e3e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="47" width="120" height="31" uuid="f9fb8165-9ab2-4d4c-9fdf-e779696cd95b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{proveedor_codigoProveedor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="78" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="199" y="5" width="157" height="39" uuid="319996fb-d515-4197-8a7b-7536036d7ca4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Armenia, Quindío
+2021
+]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -29,6 +29,8 @@ import co.edu.uniquindio.modelo.Cliente;
 import co.edu.uniquindio.modelo.Producto;
 import co.edu.uniquindio.modelo.Proveedor;
 import co.edu.uniquindio.modelo.Sede;
+import groovy.util.logging.Log4j;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -44,12 +46,26 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.Console;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.Date;
-import java.util.ArrayList;
+import java.sql.DriverManager;
+
 import javax.swing.JList;
 import java.awt.Panel;
 import java.awt.ScrollPane;
+
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.xml.JRXmlDigesterFactory;
+
 
 public class VistaPrincipal extends JFrame {
 
@@ -1899,31 +1915,19 @@ public class VistaPrincipal extends JFrame {
 		panelConsultas.setBackground(Color.WHITE);
 		tabbedPane.addTab("Consultas", null, panelConsultas, null);
 		panelConsultas.setLayout(null);
-		
-		JButton bGenerarPDF = new JButton("Generar PDF");
-		bGenerarPDF.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				
-				
-			}
-		});
-		
-		bGenerarPDF.setBackground(Color.LIGHT_GRAY);
-		bGenerarPDF.setBounds(600, 370, 128, 28);
-		panelConsultas.add(bGenerarPDF);
 	
 		String [] consultas = {"Listar el cliente con el carrito más caro",
-				"Listar el producto con más unidades",
-				"Listar la sede con más ventas",
+				"Listar el producto con más unidades en stock",
+				"Listar la sede a la que han proveído más veces", 
 				"Listar los clientes que compraron en la sede de Armenia un producto de higiene, además, "
-					+ "los que compraron en la sede de Medellín un producto de Hogar",
+						+ "los que compraron en la sede de Medellín un producto de Hogar",
 				"Listar los proveedores que proveyeron productos de Mascotas a la sede de Medellín y a la sede de Bogotá",
 				"Listar las sedes en orden descendente por ventas",
 				"Listar los clientes que compraron un producto de tipo alimento con un precio superior a 10000, "
-				+ "sólo listar aquellos que hayan comprado en la misma sede que los que compraron productos de tipo Belleza",
+						+ "sólo listar aquellos que hayan comprado en la misma sede que los que compraron productos de tipo Belleza",
 				"Listar los proveedores que proveyeron a la sede de Medellín. Tener en cuenta solo los proveedores que hayan proveído en alguna de las fechas de los que proveyeron a la sede de Bogotá",
 				"Listar por Sede las ventas totales que tiene. Tener en cuenta solo aquellos clientes que tengan un carrito con un precio superior "
-				+ "al del carrito más caro de la sede de Medellín"};
+						+ "al del carrito más caro de la sede de Armenia"};
 		
 		listaConsultas = new JList<String>(consultas);
 		listaConsultas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -1972,6 +1976,251 @@ public class VistaPrincipal extends JFrame {
 		textPane.setEditable(false);
 		panelConsultas.add(textPane);
 		
+		JButton bGenerarPDF = new JButton("Generar PDF");
+		bGenerarPDF.setBackground(Color.LIGHT_GRAY);
+		bGenerarPDF.setBounds(642, 350, 128, 28);
+		bGenerarPDF.setEnabled(false);
+		panelConsultas.add(bGenerarPDF);
+		bGenerarPDF.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				List<String> consulta2 = listaConsultas.getSelectedValuesList();
+				
+				String aux2 = "";
+				
+				for (String aux : consulta2) {
+					
+					aux2 = aux;
+					
+				}
+				
+				try {
+					
+				
+					Class.forName("com.mysql.cj.jdbc.Driver");
+					Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/buenPrecio", "root", "1234567890");
+					
+					String sql = "";
+					String arch = "";
+					
+					if (aux2.equalsIgnoreCase(consultas[0])) {
+						
+						sql = "SELECT * FROM cliente INNER JOIN carrito ON cliente.cedula = carrito.cedulaCliente ORDER BY carrito.costoTotal DESC LIMIT 1";
+						arch = "C:\\Users\\TecnoMakro\\Desktop\\Trabajos\\Proyecto Final Bases\\ProyectoFinalBases\\src\\co\\edu\\uniquindio\\reportes\\Reporte1.jrxml";
+						
+					} else {
+						
+						if (aux2.equalsIgnoreCase(consultas[1])) {
+							
+							sql = "SELECT * FROM producto INNER JOIN tipo_producto ON producto.tipo_tipoProducto = tipo_producto.codigoTipo ORDER BY producto.stock DESC LIMIT 1";
+							arch = "C:\\Users\\TecnoMakro\\Desktop\\Trabajos\\Proyecto Final Bases\\ProyectoFinalBases\\src\\co\\edu\\uniquindio\\reportes\\Reporte2.jrxml";
+							
+						} else {
+							
+							if (aux2.equalsIgnoreCase(consultas[2])) {
+								
+								sql = "SELECT sede.codigoSede, Count(sedeP.sede_codigoSede) AS codS_count FROM sede_proveedor sedeP INNER JOIN sede "
+										+ "ON sedeP.sede_codigoSede = sede.codigoSede GROUP BY sede.codigoSede "
+										+ "ORDER BY codS_count DESC LIMIT 1";
+								arch = "C:\\Users\\TecnoMakro\\Desktop\\Trabajos\\Proyecto Final Bases\\ProyectoFinalBases\\src\\co\\edu\\uniquindio\\reportes\\Reporte3.jrxml";
+								
+							} else {
+								
+								if (aux2.equalsIgnoreCase(consultas[3])) {
+									
+									sql = "SELECT * FROM cliente clienteP INNER JOIN carrito carP"
+											+ " ON clienteP.cedula = carP.cedulaCliente"
+											+ "	INNER JOIN  carrito_sede_proveedor principalCSP"
+											+ "	ON carP.numeroCarrito = principalCSP.carrito_numeroCarrito"
+											+ "	INNER JOIN sede_Proveedor sedeProveP"
+											+ "	ON principalCSP.codigoSP = sedeProveP.codigo"
+											+ "	INNER JOIN sede sedeP"
+											+ "	ON sedeProveP.sede_codigoSede = sedeP.codigoSede"
+											+ "	INNER JOIN ciudad ciudadP"
+											+ "	ON sedeP.ciudad_codigoPostal = ciudadP.codigoPostal"
+											+ "	INNER JOIN  producto produP"
+											+ "	ON sedeProveP.producto_codigoProducto = produP.codigoProducto"
+											+ "	INNER JOIN tipo_producto tipoP"
+											+ "	ON produP.tipo_tipoProducto = tipoP.codigoTipo"
+											+ "	WHERE (tipoP.nombreTipo LIKE 'higiene'"
+											+ "	AND ciudadP.nombre LIKE 'armenia')"
+											+ " OR (tipoP.nombreTipo LIKE 'hogar'"
+											+ " AND ciudadP.nombre LIKE 'medellin')";
+									
+									arch = "C:\\Users\\TecnoMakro\\Desktop\\Trabajos\\Proyecto Final Bases\\ProyectoFinalBases\\src\\co\\edu\\uniquindio\\reportes\\Reporte4.jrxml";
+									
+								} else {
+									
+									if (aux2.equalsIgnoreCase(consultas[4])) {
+										
+										sql = "SELECT * FROM proveedor prov"
+												+ "	INNER JOIN  sede_proveedor sedeProv"
+												+ "	ON prov.codigoProveedor = sedeProv.proveedor_codigoProveedor"
+												+ "	INNER JOIN producto produc"
+												+ "	ON sedeProv.producto_codigoProducto = produc.codigoProducto"
+												+ "	INNER JOIN tipo_producto tipoP"
+												+ "	ON produc.tipo_tipoProducto = tipoP.codigoTipo"
+												+ "	INNER JOIN sede sedeP"
+												+ "	ON sedeProv.sede_codigoSede = sedeP.codigoSede"
+												+ "	INNER JOIN ciudad ciuP"
+												+ "	ON sedeP.ciudad_codigoPostal = ciuP.codigoPostal"
+												+ "	WHERE tipoP.nombreTipo LIKE 'mascota'"
+												+ "	AND ciuP.nombre LIKE 'medellin'"
+												+ "	AND prov.codigoProveedor IN"
+												+ "	(SELECT prov2.codigoProveedor FROM proveedor prov2"
+												+ "	INNER JOIN sede_proveedor sedeProv2"
+												+ "	ON prov2.codigoProveedor = sedeProv2.proveedor_codigoProveedor"
+												+ "	INNER JOIN producto produc2"
+												+ "	ON sedeProv2.producto_codigoProducto = produc2.codigoProducto"
+												+ "	INNER JOIN tipo_producto tipoP2"
+												+ "	ON produc2.tipo_tipoProducto = tipoP2.codigoTipo"
+												+ "	INNER JOIN sede sedeP2"
+												+ "	ON sedeProv2.sede_codigoSede = sedeP2.codigoSede"
+												+ "	INNER JOIN ciudad ciuP2"
+												+ "	ON sedeP2.ciudad_codigoPostal = ciuP2.codigoPostal"
+												+ "	WHERE tipoP2.nombreTipo LIKE 'mascota'"
+												+ "	AND ciuP2.nombre LIKE 'bogota')";
+										
+										arch = "C:\\Users\\TecnoMakro\\Desktop\\Trabajos\\Proyecto Final Bases\\ProyectoFinalBases\\src\\co\\edu\\uniquindio\\reportes\\Reporte5.jrxml";
+										
+									} else {
+										
+										if (aux2.equalsIgnoreCase(consultas[5])) {
+											
+											sql = "SELECT sedeP.codigoSede, COUNT(sedeProv.sede_codigoSede) AS count_sede"
+													+ "	FROM sede sedeP INNER JOIN sede_proveedor sedeProv"
+													+ "	ON sedeP.codigoSede = sedeProv.sede_codigoSede"
+													+ "	INNER JOIN carrito_sede_proveedor carSedeP"
+													+ "	ON sedeProv.codigo = carSedeP.codigoSP"
+													+ "	GROUP BY sedeP.codigoSede ORDER BY count_sede DESC";
+											
+											arch = "C:\\Users\\TecnoMakro\\Desktop\\Trabajos\\Proyecto Final Bases\\ProyectoFinalBases\\src\\co\\edu\\uniquindio\\reportes\\Reporte6.jrxml";
+											
+										} else {
+											
+											if (aux2.equalsIgnoreCase(consultas[6])) {
+												
+												sql = "SELECT * FROM cliente clienteP INNER JOIN carrito carP"
+														+ " ON clienteP.cedula = carP.cedulaCliente"
+														+ " INNER JOIN carrito_sede_proveedor carSedeProv"
+														+ " ON carP.numeroCarrito = carSedeProv.carrito_numeroCarrito"
+														+ " INNER JOIN sede_proveedor sedeProv"
+														+ " ON carSedeProv.codigoSP = sedeProv.codigo"
+														+ " INNER JOIN producto produc"
+														+ " ON sedeProv.producto_codigoProducto = produc.codigoProducto"
+														+ " INNER JOIN tipo_producto tipoP"
+														+ " ON produc.tipo_tipoProducto = tipoP.codigoTipo"
+														+ " INNER JOIN sede sedeP"
+														+ " ON sedeProv.sede_codigoSede = sedeP.codigoSede"
+														+ " WHERE produc.precio > 10000"
+														+ " AND sedeP.codigoSede"
+														+ " IN (SELECT sedeP2.codigoSede FROM cliente clienteP2"
+														+ " INNER JOIN carrito carP2"
+														+ " ON clienteP2.cedula = carP2.cedulaCliente"
+														+ " INNER JOIN carrito_sede_proveedor carSedeProv2"
+														+ " ON carP2.numeroCarrito = carSedeProv2.carrito_numeroCarrito"
+														+ " INNER JOIN sede_proveedor sedeProv2"
+														+ " ON carSedeProv2.codigoSP = sedeProv2.codigo"
+														+ " INNER JOIN producto produc2"
+														+ " ON sedeProv2.producto_codigoProducto = produc2.codigoProducto"
+														+ " INNER JOIN tipo_producto tipoP2"
+														+ " ON produc2.tipo_tipoProducto = tipoP2.codigoTipo"
+														+ " INNER JOIN sede sedeP2"
+														+ " ON sedeProv2.sede_codigoSede = sedeP2.codigoSede"
+														+ " WHERE tipoP2.nombreTipo LIKE 'belleza')";
+												
+												arch = "C:\\Users\\TecnoMakro\\Desktop\\Trabajos\\Proyecto Final Bases\\ProyectoFinalBases\\src\\co\\edu\\uniquindio\\reportes\\Reporte7.jrxml";
+												
+											} else {
+												
+												if (aux2.equalsIgnoreCase(consultas[7])) {
+													
+													sql = "SELECT * FROM proveedor prov"
+															+ "	INNER JOIN  sede_proveedor sedeProv"
+															+ "	ON prov.codigoProveedor = sedeProv.proveedor_codigoProveedor"
+															+ "	INNER JOIN sede sedeP"
+															+ "	ON sedeProv.sede_codigoSede = sedeP.codigoSede"
+															+ "	INNER JOIN ciudad ciuP"
+															+ "	ON sedeP.ciudad_codigoPostal = ciuP.codigoPostal"
+															+ "	WHERE ciuP.nombre LIKE 'medellin'"
+															+ "	AND sedeProv.fecha IN"
+															+ "	(SELECT sedeProv2.fecha FROM proveedor prov2"
+															+ "	INNER JOIN  sede_proveedor sedeProv2"
+															+ "	ON prov2.codigoProveedor = sedeProv2.proveedor_codigoProveedor"
+															+ "	INNER JOIN sede sedeP2"
+															+ "	ON sedeProv2.sede_codigoSede = sedeP2.codigoSede"
+															+ "	INNER JOIN ciudad ciuP2"
+															+ "	ON sedeP2.ciudad_codigoPostal = ciuP2.codigoPostal"
+															+ "	WHERE ciuP2.nombre  LIKE 'bogota')";
+													
+													arch = "C:\\Users\\TecnoMakro\\Desktop\\Trabajos\\Proyecto Final Bases\\ProyectoFinalBases\\src\\co\\edu\\uniquindio\\reportes\\Reporte8.jrxml";
+													
+												} else {
+													
+													if (aux2.equalsIgnoreCase(consultas[8])) {
+														
+														sql = "SELECT sedeP.codigoSede, SUM(carP.costoTotal) AS sum_sede"
+																+ "	FROM sede sedeP INNER JOIN sede_proveedor sedeProv"
+																+ "	ON sedeP.codigoSede = sedeProv.sede_codigoSede"
+																+ "	INNER JOIN carrito_sede_proveedor carSedeP"
+																+ "	ON sedeProv.codigo = carSedeP.codigoSP"
+																+ "	INNER JOIN carrito carP"
+																+ "	ON carSedeP.carrito_numeroCarrito = carP.numeroCarrito"
+																+ "	WHERE costoTotal >"
+																+ "	(SELECT MAX(costoTotal) FROM carrito carP2"
+																+ "	INNER JOIN carrito_sede_proveedor carSedeProv2"
+																+ "	ON carP2.numeroCarrito = carSedeProv2.carrito_numeroCarrito"
+																+ "	INNER JOIN sede_proveedor sedeProv2"
+																+ "	ON carSedeProv2.codigoSP = sedeProv2.codigo"
+																+ "	INNER JOIN sede sedeP2"
+																+ "	ON sedeProv2.sede_codigoSede = sedeP2.codigoSede"
+																+ "	INNER JOIN ciudad ciuP2"
+																+ "	ON sedeP2.ciudad_codigoPostal = ciuP2.codigoPostal"
+																+ "	WHERE ciuP2.nombre LIKE 'armenia')"
+																+ "	GROUP BY sedeP.codigoSede"
+																+ "	ORDER BY Sum_sede DESC";
+														
+														arch = "C:\\Users\\TecnoMakro\\Desktop\\Trabajos\\Proyecto Final Bases\\ProyectoFinalBases\\src\\co\\edu\\uniquindio\\reportes\\Reporte9.jrxml";
+														
+													} else {
+														
+														System.out.println("Seleccione una opción válida");
+														
+													}
+													
+												}
+												
+											}
+											
+										}
+										
+									}
+									
+								}
+								
+							}
+							
+						}
+						
+					}
+					
+					JasperDesign jdesign = JRXmlLoader.load(arch);
+					JRDesignQuery updateQuery = new JRDesignQuery();
+					updateQuery.setText(sql);
+					
+					jdesign.setQuery(updateQuery);
+					
+					JasperReport jReport = JasperCompileManager.compileReport(jdesign);
+					JasperPrint jPrint = JasperFillManager.fillReport(jReport, null, con);
+					
+					JasperViewer.viewReport(jPrint, false);
+					
+				}catch(Exception e2) {
+					JOptionPane.showMessageDialog(null, e2);
+				}
+			}
+		});
+		
 		listaConsultas.addListSelectionListener(new ListSelectionListener(){
 
 			@Override
@@ -1980,6 +2229,16 @@ public class VistaPrincipal extends JFrame {
 				List<String> consulta = listaConsultas.getSelectedValuesList();
 				
 				StringBuilder texto = new StringBuilder();
+				
+				if(listaConsultas.isSelectionEmpty()){
+					
+					bGenerarPDF.setEnabled(false);
+					
+				} else {
+					
+					bGenerarPDF.setEnabled(true);
+					
+				}
 				
 				for (String aux : consulta) {
 					
@@ -1996,6 +2255,8 @@ public class VistaPrincipal extends JFrame {
 			}
 			
 		});
+		
+		
 		
 	}
 }

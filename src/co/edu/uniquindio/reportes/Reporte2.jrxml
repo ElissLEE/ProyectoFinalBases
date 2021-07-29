@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f287fb1c-f3fa-41b8-b54b-86b6772da077">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="JasperDB"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM producto INNER JOIN tipo_producto
+ON producto.tipo_tipoProducto = tipo_producto.codigoTipo
+ORDER BY producto.stock DESC LIMIT 1]]>
+	</queryString>
+	<field name="codigoProducto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codigoProducto"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigoProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="stock" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="stock"/>
+		<property name="com.jaspersoft.studio.field.label" value="stock"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="precio"/>
+		<property name="com.jaspersoft.studio.field.label" value="precio"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_tipoProducto" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="tipo_tipoProducto"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo_tipoProducto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="producto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigoTipo" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codigoTipo"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigoTipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tipo_producto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombreTipo" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombreTipo"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombreTipo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tipo_producto"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<image>
+				<reportElement x="213" y="25" width="129" height="40" uuid="c6cef6e3-6aa6-4fa0-809b-e7624973fa41"/>
+				<imageExpression><![CDATA["C:/Users/TecnoMakro/Desktop/Trabajos/Proyecto Final Bases/ProyectoFinalBases/src/co/edu/uniquindio/inconos/Titulo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="91" y="11" width="373" height="30" uuid="2c1938d6-1f45-4a78-8de4-49249606f9ec"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resultados de la consulta seleccionada]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="32" y="12" width="490" height="23" uuid="c47b4374-86dc-4b1a-b071-01447c101623"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Consulta: Listar el producto con más unidades en stock
+]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="154" splitType="Stretch">
+			<staticText>
+				<reportElement x="27" y="10" width="100" height="18" uuid="b7cf12c3-c7f5-4c81-89f7-280b773d6cc0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="127" y="10" width="100" height="18" uuid="45d060cc-9557-4203-b70b-28c1bff4a491"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="227" y="10" width="100" height="18" uuid="be1a76d7-152c-4637-9fe9-5b7ab0eba9b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Descripción]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="327" y="10" width="100" height="18" uuid="fb5a644c-1da6-49f5-852e-6f716bb5ef5f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Precio]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="27" y="47" width="100" height="31" uuid="9cb3f487-07fd-459e-9305-dfdae1698b4d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigoProducto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="127" y="47" width="100" height="31" uuid="f62f34b8-2151-4abd-b83e-585b59656810"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="47" width="100" height="31" uuid="d5d6a193-c2fe-40f1-9193-6e2635d0b207"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="327" y="47" width="100" height="31" uuid="c2654186-b2de-4307-aac7-3ea668fcae35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{precio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="427" y="10" width="100" height="18" uuid="3863d8e7-b661-4fea-9121-b87a83bbb53b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo Producto]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="427" y="47" width="100" height="31" uuid="6a381072-cba0-4ba0-98ed-656ae3613ba2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombreTipo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="227" y="90" width="100" height="18" uuid="7ff5a5e9-3ac4-4e4d-b387-5e10cd89f226"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Stock]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="227" y="123" width="100" height="31" uuid="88558ca1-e1b3-43cf-9d05-3f30f39c05a7"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{stock}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="78" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="199" y="5" width="157" height="39" uuid="319996fb-d515-4197-8a7b-7536036d7ca4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Armenia, Quindío
+2021
+]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f287fb1c-f3fa-41b8-b54b-86b6772da077">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="JasperDB"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT sede.codigoSede, Count(sedeP.sede_codigoSede) AS codS_count
+FROM sede_proveedor sedeP INNER JOIN sede
+ON sedeP.sede_codigoSede = sede.codigoSede
+GROUP BY sede.codigoSede
+ORDER BY codS_count DESC
+LIMIT 1
+]]>
+	</queryString>
+	<field name="codigoSede" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="codigoSede"/>
+		<property name="com.jaspersoft.studio.field.label" value="codigoSede"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codS_count" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="sede_codigoSede"/>
+		<property name="com.jaspersoft.studio.field.label" value="codS_count"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="sede_proveedor"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<image>
+				<reportElement x="213" y="25" width="129" height="40" uuid="c6cef6e3-6aa6-4fa0-809b-e7624973fa41"/>
+				<imageExpression><![CDATA["C:/Users/TecnoMakro/Desktop/Trabajos/Proyecto Final Bases/ProyectoFinalBases/src/co/edu/uniquindio/inconos/Titulo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="91" y="11" width="373" height="30" uuid="2c1938d6-1f45-4a78-8de4-49249606f9ec"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resultados de la consulta seleccionada]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="32" y="12" width="490" height="23" uuid="c47b4374-86dc-4b1a-b071-01447c101623"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Consulta: Listar la sede a la que han proveído más veces
+]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="78" splitType="Stretch">
+			<staticText>
+				<reportElement x="160" y="10" width="100" height="18" uuid="b7cf12c3-c7f5-4c81-89f7-280b773d6cc0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código Sede]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="160" y="47" width="100" height="31" uuid="9cb3f487-07fd-459e-9305-dfdae1698b4d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codigoSede}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="300" y="10" width="120" height="18" uuid="3863d8e7-b661-4fea-9121-b87a83bbb53b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[N° Veces Proveída]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="300" y="47" width="120" height="31" uuid="6a381072-cba0-4ba0-98ed-656ae3613ba2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codS_count}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="78" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="199" y="5" width="157" height="39" uuid="319996fb-d515-4197-8a7b-7536036d7ca4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Armenia, Quindío
+2021
+]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

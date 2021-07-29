@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f287fb1c-f3fa-41b8-b54b-86b6772da077">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="JasperDB"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM cliente INNER JOIN carrito
+ON cliente.cedula = carrito.cedulaCliente
+ORDER BY carrito.costoTotal DESC
+LIMIT 1]]>
+	</queryString>
+	<field name="cedula" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.label" value="cedula"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="apellido" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="apellido"/>
+		<property name="com.jaspersoft.studio.field.label" value="apellido"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.label" value="direccion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="numeroCarrito" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="numeroCarrito"/>
+		<property name="com.jaspersoft.studio.field.label" value="numeroCarrito"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="carrito"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="costoTotal" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="costoTotal"/>
+		<property name="com.jaspersoft.studio.field.label" value="costoTotal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="carrito"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cedulaCliente" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="cedulaCliente"/>
+		<property name="com.jaspersoft.studio.field.label" value="cedulaCliente"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="carrito"/>
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90" splitType="Stretch">
+			<image>
+				<reportElement x="213" y="25" width="129" height="40" uuid="c6cef6e3-6aa6-4fa0-809b-e7624973fa41"/>
+				<imageExpression><![CDATA["C:/Users/TecnoMakro/Desktop/Trabajos/Proyecto Final Bases/ProyectoFinalBases/src/co/edu/uniquindio/inconos/Titulo.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="53" splitType="Stretch">
+			<staticText>
+				<reportElement x="91" y="11" width="373" height="30" uuid="2c1938d6-1f45-4a78-8de4-49249606f9ec"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="19" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Resultados de la consulta seleccionada]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="32" y="12" width="490" height="23" uuid="c47b4374-86dc-4b1a-b071-01447c101623"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Consulta: Listar el cliente con el carrito más caro
+]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="166" splitType="Stretch">
+			<staticText>
+				<reportElement x="20" y="10" width="100" height="18" uuid="b7cf12c3-c7f5-4c81-89f7-280b773d6cc0"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cédula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="10" width="100" height="18" uuid="45d060cc-9557-4203-b70b-28c1bff4a491"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="290" y="10" width="100" height="18" uuid="be1a76d7-152c-4637-9fe9-5b7ab0eba9b3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Apellido]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="430" y="10" width="100" height="18" uuid="fb5a644c-1da6-49f5-852e-6f716bb5ef5f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="47" width="100" height="31" uuid="9cb3f487-07fd-459e-9305-dfdae1698b4d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{cedula}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="150" y="47" width="100" height="31" uuid="f62f34b8-2151-4abd-b83e-585b59656810"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="47" width="100" height="31" uuid="d5d6a193-c2fe-40f1-9193-6e2635d0b207"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="430" y="47" width="100" height="31" uuid="c2654186-b2de-4307-aac7-3ea668fcae35"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="290" y="100" width="100" height="18" uuid="55eefdb3-21ac-4d61-baa0-186f147dbf39"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Costo Carrito]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="290" y="130" width="100" height="31" uuid="7e4e0571-e238-4c44-9c07-8534fb0e749e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{costoTotal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="150" y="100" width="100" height="18" uuid="1ab28387-f513-406f-9b3a-5784cdf4e813"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Número Carrito]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="150" y="130" width="100" height="31" uuid="caa1e82b-d815-498d-8290-366e7fc88444"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{numeroCarrito}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="49" splitType="Stretch">
+			<staticText>
+				<reportElement x="199" y="5" width="157" height="39" uuid="319996fb-d515-4197-8a7b-7536036d7ca4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Armenia, Quindío
+2021
+]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
